@@ -5,5 +5,3 @@ export const pool = new Pool({
   connectionString: env.DB_CONNECTION_URL,
   max: 5,
 });
-
-console.log('DATABASE_URL:', env.DB_CONNECTION_URL);

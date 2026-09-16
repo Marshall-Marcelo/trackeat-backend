@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import { ConflictError } from '../utils/error.js';
+import { AppError } from '../utils/error.js';
 
 export function errorMiddleware(
   error: Error,
@@ -7,8 +7,8 @@ export function errorMiddleware(
   res: Response,
   next: NextFunction,
 ) {
-  if (error instanceof ConflictError) {
-    return res.status(409).json({
+  if (error instanceof AppError) {
+    return res.status(error.statusCode).json({
       message: error.message,
     });
   }

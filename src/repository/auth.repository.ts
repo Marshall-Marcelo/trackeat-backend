@@ -1,11 +1,5 @@
 import { pool } from '../configs/db.js';
-
-interface UserRow {
-  user_id: string;
-  email: string;
-  password: string;
-  username: string;
-}
+import type { UserRow } from '../types/auth.types.js';
 
 export async function createUser(
   email: string,
@@ -42,6 +36,17 @@ export async function findUser(
        WHERE email = $1 OR username = $1 
        LIMIT 1`,
     [nameCredential],
+  );
+
+  return result.rows[0] ?? null;
+}
+
+export async function getUser(userId: string) {
+  const result = await pool.query(
+    `SELECT user_id, email, username
+     FROM users
+     WHERE user_id = $1`,
+    [userId],
   );
 
   return result.rows[0] ?? null;
