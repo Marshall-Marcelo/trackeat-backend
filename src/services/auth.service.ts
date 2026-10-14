@@ -108,5 +108,11 @@ export async function getCurrentUser(accessToken: string) {
 
   const user = await getUser(payload.sub);
 
-  return user;
+  const parsedUser = {
+    userId: user?.user_id,
+    email: user?.email,
+    username: user?.username,
+  };
+
+  return parsedUser;
 }

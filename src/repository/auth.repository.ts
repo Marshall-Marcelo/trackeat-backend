@@ -41,7 +41,9 @@ export async function findUser(
   return result.rows[0] ?? null;
 }
 
-export async function getUser(userId: string) {
+export async function getUser(
+  userId: string,
+): Promise<Omit<UserRow, 'password'> | null> {
   const result = await pool.query(
     `SELECT user_id, email, username
      FROM users

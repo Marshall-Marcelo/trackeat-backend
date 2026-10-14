@@ -3,6 +3,7 @@ import {
   registerUser,
   verifyUser,
   refreshAccessToken,
+  getCurrentUser,
 } from '../services/auth.service.js';
 import { UnauthorizedError } from '../utils/error.js';
 
@@ -65,9 +66,36 @@ export async function refreshAccessTokenController(
       throw new UnauthorizedError('Refresh Token Missing');
     }
 
-    const accessToken = refreshAccessToken(refreshToken);
+    const accessToken = await refreshAccessToken(refreshToken);
 
-    res.status(200).json({ accessToken });
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      sameSite: 'lax', //strict in prod
+      // secure: true,
+      maxAge: 15 * 60 * 1000,
+    });
+
+    res.status(200).end();
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getCurrentUserController(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const accessToken = req.cookies.accessToken;
+
+    if (!accessToken) {
+      throw new UnauthorizedError('Access Token missing');
+    }
+
+    const currentUser = await getCurrentUser(accessToken);
+
+    res.status(200).json({ user: currentUser });
   } catch (error) {
     next(error);
   }
