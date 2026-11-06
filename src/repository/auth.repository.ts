@@ -13,7 +13,7 @@ export async function createUser(
     [userId, email, password, username],
   );
 
-  return result.rows.length > 0;
+  return (result.rowCount ?? 0) > 0;
 }
 
 export async function changeUsername(username: string, userId: string) {
@@ -24,7 +24,7 @@ export async function changeUsername(username: string, userId: string) {
     [username, userId],
   );
 
-  return result.rows.length > 0;
+  return (result.rowCount ?? 0) > 0;
 }
 
 export async function findUser(
@@ -32,9 +32,9 @@ export async function findUser(
 ): Promise<UserRow | null> {
   const result = await pool.query<UserRow>(
     `SELECT user_id, email, password, username 
-       FROM users 
-       WHERE email = $1 OR username = $1 
-       LIMIT 1`,
+     FROM users 
+     WHERE email = $1 OR username = $1 
+     LIMIT 1`,
     [nameCredential],
   );
 
@@ -57,9 +57,9 @@ export async function getUser(
 export async function isEmailUsed(email: string) {
   const result = await pool.query(
     `SELECT email
-       FROM users
-       WHERE email = $1
-       LIMIT 1`,
+     FROM users
+     WHERE email = $1
+     LIMIT 1`,
     [email],
   );
 
@@ -69,9 +69,9 @@ export async function isEmailUsed(email: string) {
 export async function isUsernameUsed(username: string) {
   const result = await pool.query(
     `SELECT username
-       FROM users
-       WHERE username = $1
-       LIMIT 1`,
+     FROM users
+     WHERE username = $1
+     LIMIT 1`,
     [username],
   );
 
