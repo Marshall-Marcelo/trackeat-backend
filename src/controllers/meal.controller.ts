@@ -38,9 +38,9 @@ export async function getMealCategoriesController(
       throw new UnauthorizedError('Unauthorized');
     }
 
-    await getUserMealCategories(userId);
+    const mealCategories = await getUserMealCategories(userId);
 
-    res.status(200).end();
+    res.status(200).json(mealCategories);
   } catch (error) {
     next(error);
   }

@@ -12,3 +12,8 @@ export interface NewCategory {
   userId: string;
   categoryName: string;
 }
+
+export interface MealCategory {
+  categoryId: string;
+  categoryName: string;
+}

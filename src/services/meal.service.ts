@@ -6,7 +6,7 @@ import {
   getMealCategories,
 } from '../repository/meal.repository.js';
 import { v7 } from 'uuid';
-import type { NewMeal } from '../types/meal.types.js';
+import type { NewMeal, MealCategory } from '../types/meal.types.js';
 
 export async function createNewNeal(
   userId: string,
@@ -30,5 +30,17 @@ export async function createNewNeal(
 }
 
 export async function getUserMealCategories(userId: string) {
-  await getMealCategories(userId);
+  const mealCategories: MealCategory[] = [];
+  const data = await getMealCategories(userId);
+
+  for (const categories of data) {
+    const mealCategory: MealCategory = {
+      categoryId: categories.category_id,
+      categoryName: categories.category_name,
+    };
+
+    mealCategories.push(mealCategory);
+  }
+
+  return mealCategories;
 }
