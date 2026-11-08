@@ -8,15 +8,20 @@ export async function createMeal(mealDetails: NewMeal) {
     await client.query('BEGIN');
 
     await client.query(
-      `INSERT INTO meals(meal_id, user_id, meal_name, meal_type, meal_date)
-       VALUES ($1, $2, $3, $4, $5)`,
+      `INSERT INTO meals(meal_id, user_id, meal_name, meal_date)
+       VALUES ($1, $2, $3, $4)`,
       [
         mealDetails.mealId,
         mealDetails.userId,
         mealDetails.mealName,
-        mealDetails.mealType,
         mealDetails.mealDate,
       ],
+    );
+
+    await client.query(
+      `INSERT INTO meal_types(meal_id, type_id)
+       VALUES ($1, $2)`,
+      [mealDetails.mealId, mealDetails.mealType],
     );
 
     for (const categoryId of mealDetails.mealCategories) {
@@ -71,6 +76,16 @@ export async function deleteMealCategory(categoryId: string, userId: string) {
 export async function getMealCategories(userId: string) {
   const result = await pool.query(
     `SELECT category_id, category_name FROM categories
+     WHERE status = 'DEFAULT' OR user_id = $1`,
+    [userId],
+  );
+
+  return result.rows ?? null;
+}
+
+export async function getMealTypes(userId: string) {
+  const result = await pool.query(
+    `SELECT type_id, type_name FROM types
      WHERE status = 'DEFAULT' OR user_id = $1`,
     [userId],
   );

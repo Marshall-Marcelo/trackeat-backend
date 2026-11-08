@@ -17,3 +17,8 @@ export interface MealCategory {
   categoryId: string;
   categoryName: string;
 }
+
+export interface MealType {
+  typeId: string;
+  typeName: string;
+}

@@ -4,9 +4,10 @@ import {
   deleteMeal,
   deleteMealCategory,
   getMealCategories,
+  getMealTypes,
 } from '../repository/meal.repository.js';
 import { v7 } from 'uuid';
-import type { NewMeal, MealCategory } from '../types/meal.types.js';
+import type { NewMeal, MealCategory, MealType } from '../types/meal.types.js';
 
 export async function createNewNeal(
   userId: string,
@@ -33,14 +34,30 @@ export async function getUserMealCategories(userId: string) {
   const mealCategories: MealCategory[] = [];
   const data = await getMealCategories(userId);
 
-  for (const categories of data) {
+  for (const category of data) {
     const mealCategory: MealCategory = {
-      categoryId: categories.category_id,
-      categoryName: categories.category_name,
+      categoryId: category.category_id,
+      categoryName: category.category_name,
     };
 
     mealCategories.push(mealCategory);
   }
 
   return mealCategories;
+}
+
+export async function getUserMealTypes(userId: string) {
+  const mealTypes: MealType[] = [];
+  const data = await getMealTypes(userId);
+
+  for (const dbType of data) {
+    const mealType: MealType = {
+      typeId: dbType.type_id,
+      typeName: dbType.type_name,
+    };
+
+    mealTypes.push(mealType);
+  }
+
+  return mealTypes;
 }

@@ -2,6 +2,7 @@ import type { Request, Response, NextFunction } from 'express';
 import {
   createNewNeal,
   getUserMealCategories,
+  getUserMealTypes,
 } from '../services/meal.service.js';
 import { UnauthorizedError } from '../utils/error.js';
 
@@ -41,6 +42,26 @@ export async function getMealCategoriesController(
     const mealCategories = await getUserMealCategories(userId);
 
     res.status(200).json(mealCategories);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getMealTypesController(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const userId = req.userId;
+
+    if (!userId) {
+      throw new UnauthorizedError('Unauthorized');
+    }
+
+    const mealTypes = await getUserMealTypes(userId);
+
+    res.status(200).json(mealTypes);
   } catch (error) {
     next(error);
   }
