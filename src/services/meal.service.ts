@@ -5,9 +5,11 @@ import {
   deleteMealCategory,
   getMealCategories,
   getMealTypes,
+  getUserMeals,
 } from '../repository/meal.repository.js';
 import { v7 } from 'uuid';
 import type { NewMeal, MealCategory, MealType } from '../types/meal.types.js';
+import { BadRequestError } from '../utils/error.js';
 
 export async function createNewNeal(
   userId: string,
@@ -16,6 +18,10 @@ export async function createNewNeal(
   mealCategories: string[],
   mealDate: string,
 ) {
+  if (!userId || !mealName || !mealType || !mealCategories || !mealDate) {
+    throw new BadRequestError('Incomplete Data');
+  }
+
   const mealId = v7();
 
   const mealDetails: NewMeal = {
@@ -60,4 +66,14 @@ export async function getUserMealTypes(userId: string) {
   }
 
   return mealTypes;
+}
+
+export async function getMealsByUserId(
+  userId: string,
+  year: string,
+  month: string,
+) {
+  const data = await getUserMeals(userId, year, month);
+
+  return data;
 }

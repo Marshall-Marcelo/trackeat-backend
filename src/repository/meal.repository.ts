@@ -92,3 +92,51 @@ export async function getMealTypes(userId: string) {
 
   return result.rows ?? null;
 }
+
+export async function getUserMeals(
+  userId: string,
+  year: string,
+  month: string,
+) {
+  const result = await pool.query(
+    `SELECT
+    m.meal_id AS "mealId",
+    m.meal_name AS "mealName",
+    m.meal_date AS "mealDate",
+
+    COALESCE(
+        (
+            SELECT JSON_AGG(
+                JSON_BUILD_OBJECT(
+                    'categoryId', c.category_id,
+                    'categoryName', c.category_name
+                )
+                ORDER BY c.category_name
+            )
+            FROM meal_categories mc
+            INNER JOIN categories c
+                ON mc.category_id = c.category_id
+            WHERE mc.meal_id = m.meal_id
+        ),
+        '[]'::json
+    ) AS "mealCategories",
+
+    (
+        SELECT JSON_BUILD_OBJECT(
+            'typeId', t.type_id,
+            'typeName', t.type_name
+        )
+        FROM meal_types mt
+        INNER JOIN types t
+            ON mt.type_id = t.type_id
+        WHERE mt.meal_id = m.meal_id
+    ) AS "mealType"
+
+    FROM meals m
+    WHERE m.user_id = $1 AND m.meal_date LIKE $2
+    ORDER BY m.meal_date DESC`,
+    [userId, `${year}-${month}-%`],
+  );
+
+  return result.rows ?? null;
+}
