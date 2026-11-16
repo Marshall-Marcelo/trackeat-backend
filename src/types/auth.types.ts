@@ -4,3 +4,9 @@ export interface UserRow {
   password: string;
   username: string;
 }
+
+export interface User {
+  userId: string | undefined;
+  email: string | undefined;
+  username: string | undefined;
+}

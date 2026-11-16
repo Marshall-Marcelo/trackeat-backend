@@ -6,6 +6,7 @@ import {
   getCurrentUser,
 } from '../services/auth.service.js';
 import { UnauthorizedError } from '../utils/error.js';
+import type { User } from '../types/auth.types.js';
 
 export async function registerUserController(
   req: Request,
@@ -95,7 +96,13 @@ export async function getCurrentUserController(
 
     const currentUser = await getCurrentUser(accessToken);
 
-    res.status(200).json({ user: currentUser });
+    const user: User = {
+      userId: currentUser.userId,
+      email: currentUser.email,
+      username: currentUser.username,
+    };
+
+    res.status(200).json(user);
   } catch (error) {
     next(error);
   }
