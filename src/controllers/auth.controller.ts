@@ -55,6 +55,21 @@ export async function loginUserController(
   }
 }
 
+export async function logoutUserController(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
+
+    res.status(200).json({ message: 'Logout Success' });
+  } catch (error) {
+    next(error);
+  }
+}
+
 export async function refreshAccessTokenController(
   req: Request,
   res: Response,
