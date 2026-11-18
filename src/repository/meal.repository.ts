@@ -63,23 +63,11 @@ export async function editMeal(meal: Meal, userId: string) {
       [meal.mealType, meal.mealId],
     );
 
-    // await client.query(
-    //   `DELETE FROM meal_types
-    //    WHERE meal_id = $1`,
-    //   [meal.mealId],
-    // );
-
     await client.query(
       `DELETE FROM meal_categories
        WHERE meal_id = $1`,
       [meal.mealId],
     );
-
-    // await client.query(
-    //   `INSERT INTO meal_types(meal_id, type_id)
-    //    VALUES($1, $2)`,
-    //   [meal.mealId, meal.mealType],
-    // );
 
     for (const categoryId of meal.mealCategories) {
       await client.query(
