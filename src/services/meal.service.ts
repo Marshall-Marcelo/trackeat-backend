@@ -1,15 +1,20 @@
 import {
   createMeal,
-  createMealCategory,
   deleteMeal,
-  deleteMealCategory,
   getMealCategories,
   getMealTypes,
   getUserMeals,
+  getSelectedMeal,
+  editMeal,
 } from '../repository/meal.repository.js';
 import { v7 } from 'uuid';
-import type { NewMeal, MealCategory, MealType } from '../types/meal.types.js';
-import { BadRequestError } from '../utils/error.js';
+import type {
+  NewMeal,
+  MealCategory,
+  MealType,
+  Meal,
+} from '../types/meal.types.js';
+import { BadRequestError, NotFoundError } from '../utils/error.js';
 
 export async function createNewNeal(
   userId: string,
@@ -34,6 +39,36 @@ export async function createNewNeal(
   };
 
   await createMeal(mealDetails);
+}
+
+export async function editExistingMeal(
+  userId: string,
+  mealId: string,
+  mealName: string,
+  mealType: string,
+  mealCategories: string[],
+  mealDate: string,
+) {
+  if (
+    !userId ||
+    !mealId ||
+    !mealName ||
+    !mealType ||
+    !mealCategories ||
+    !mealDate
+  ) {
+    throw new BadRequestError('Incomplete Data');
+  }
+
+  const mealDetails: Meal = {
+    mealId,
+    mealName,
+    mealType,
+    mealCategories,
+    mealDate,
+  };
+
+  await editMeal(mealDetails, userId);
 }
 
 export async function getUserMealCategories(userId: string) {
@@ -76,4 +111,24 @@ export async function getMealsByUserId(
   const data = await getUserMeals(userId, year, month);
 
   return data;
+}
+
+export async function getSpecificMeal(userId: string, mealId: string) {
+  const data = await getSelectedMeal(userId, mealId);
+
+  if (!data) {
+    throw new NotFoundError('Meal not found');
+  }
+
+  return data;
+}
+
+export async function deleteChosenMeal(mealId: string, userId: string) {
+  const isMealDeleted = await deleteMeal(mealId, userId);
+
+  if (!isMealDeleted) {
+    throw new NotFoundError('Meal does not exist');
+  }
+
+  return isMealDeleted;
 }

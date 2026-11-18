@@ -7,6 +7,14 @@ export interface NewMeal {
   mealDate: string;
 }
 
+export interface Meal {
+  mealId: string;
+  mealName: string;
+  mealType: string;
+  mealCategories: string[];
+  mealDate: string;
+}
+
 export interface NewCategory {
   categoryId: string;
   userId: string;
