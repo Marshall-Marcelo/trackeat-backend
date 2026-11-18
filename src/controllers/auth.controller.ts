@@ -61,8 +61,16 @@ export async function logoutUserController(
   next: NextFunction,
 ) {
   try {
-    res.clearCookie('accessToken');
-    res.clearCookie('refreshToken');
+    res.clearCookie('accessToken', {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
 
     res.status(200).json({ message: 'Logout Success' });
   } catch (error) {
