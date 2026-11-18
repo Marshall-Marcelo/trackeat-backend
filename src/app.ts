@@ -14,10 +14,15 @@ export function buildApp() {
 
   app.use(environment === 'dev' ? morgan('dev') : morgan('tiny'));
 
+  console.log(env.CLIENT_URL, 'ENV FILE');
+  console.log(process.env.CLIENT_URL, 'DIRECT');
+
   app.use(
     cors({
       origin: process.env.CLIENT_URL,
       credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
     }),
   );
 
