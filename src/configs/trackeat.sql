@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict fxZk1fee9FWQd5yRWHWIVDZJoLAo1AkUKbnauH8ZtArGtWj0jQqTRvhHPxdDITk
+\restrict i4xoJcwUIY9odDw1WmKZdyXpbgXK4a3qP5mH0Xhut1h3psjX269qApvjalXx8Bf
 
 -- Dumped from database version 17.10 (Debian 17.10-1.pgdg13+1)
 -- Dumped by pg_dump version 17.10 (Debian 17.10-1.pgdg13+1)
@@ -103,75 +103,6 @@ CREATE TABLE public.users (
 
 
 ALTER TABLE public.users OWNER TO admin;
-
---
--- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: admin
---
-
-COPY public.categories (category_id, category_name, user_id, status) FROM stdin;
-1	Chicken	\N	DEFAULT
-2	Beef	\N	DEFAULT
-3	Pork	\N	DEFAULT
-4	Fish	\N	DEFAULT
-5	Vegetable	\N	DEFAULT
-6	Rice	\N	DEFAULT
-7	Bread	\N	DEFAULT
-8	Pasta	01a19879-86cd-7569-b0ee-0513707c2a8d	ACTIVE
-9	Wheels	01a01ae9-ec74-70fe-8b98-a465e36ccd68	ACTIVE
-\.
-
-
---
--- Data for Name: meal_categories; Type: TABLE DATA; Schema: public; Owner: admin
---
-
-COPY public.meal_categories (meal_id, category_id) FROM stdin;
-01a1ba6a-5bc9-720d-9c5c-c962776a5544	5
-\.
-
-
---
--- Data for Name: meal_types; Type: TABLE DATA; Schema: public; Owner: admin
---
-
-COPY public.meal_types (meal_id, type_id) FROM stdin;
-01a1ba6a-5bc9-720d-9c5c-c962776a5544	3
-\.
-
-
---
--- Data for Name: meals; Type: TABLE DATA; Schema: public; Owner: admin
---
-
-COPY public.meals (meal_id, user_id, meal_name, meal_date) FROM stdin;
-01a1ba6a-5bc9-720d-9c5c-c962776a5544	01a04706-b5c1-705d-8d6e-470b64acd0cd	Adobo	2026-11-20
-\.
-
-
---
--- Data for Name: types; Type: TABLE DATA; Schema: public; Owner: admin
---
-
-COPY public.types (type_id, user_id, type_name, status) FROM stdin;
-1	\N	Breakfast	DEFAULT
-2	\N	Lunch	DEFAULT
-3	\N	Dinner	DEFAULT
-4	\N	Snack	DEFAULT
-\.
-
-
---
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: admin
---
-
-COPY public.users (user_id, email, password, created_at, username) FROM stdin;
-01a01ae9-ec74-70fe-8b98-a465e36ccd68	g@slu.edu.ph	$2b$10$1Hi0TpHAK2rVP6FfJEfIdu9i5NyEM/m/fGV2Rth.t6wcinoPWsXtu	2026-08-19 16:45:33.17424+00	c0mgUi5V
-01a01b27-62a2-7727-9a56-a1060e1395ba	tester@a.com	$2b$10$RYaGnghtqZBWfjo03y09aOZba1Xe14ohbuskcTlZ5JMAQVARDQMFG	2026-08-19 17:52:41.124189+00	7QJV8vXZ
-01a02378-a6a0-774e-8b1c-dc593082980d	g123@slu.edu.ph	$2b$10$xd1AsZ2wUdwcpRa52Q128.DdUoFYJQmGUWY8EIUtpiqglfvIcyN2G	2026-08-21 08:38:24.674149+00	wcPjQ9iQ
-01a04706-b5c1-705d-8d6e-470b64acd0cd	aaaaaaaaaaaaaa@slu.edu.ph	$2b$10$pHTD2XXcQyE4tNzJ4Ce/cOlRfC1tc8XyReRLgJnaOL.d23sBYxZUC	2026-08-28 06:20:17.218814+00	ynGtMXMc
-01a19879-86cd-7569-b0ee-0513707c2a8d	67@a.com	$2b$10$qmqVsxHpAu05WZQsbKYn6u.GOStFwtR8XOzFcOzdLYhY219YItHre	2026-11-01 18:57:43.63005+00	fNnAuxoN
-\.
-
 
 --
 -- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
@@ -281,5 +212,5 @@ ALTER TABLE ONLY public.types
 -- PostgreSQL database dump complete
 --
 
-\unrestrict fxZk1fee9FWQd5yRWHWIVDZJoLAo1AkUKbnauH8ZtArGtWj0jQqTRvhHPxdDITk
+\unrestrict i4xoJcwUIY9odDw1WmKZdyXpbgXK4a3qP5mH0Xhut1h3psjX269qApvjalXx8Bf
 
