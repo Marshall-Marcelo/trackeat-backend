@@ -9,10 +9,6 @@ import { errorMiddleware } from './middleware/error.middleware.js';
 import cookieParser from 'cookie-parser';
 
 export function buildApp() {
-  if (!env.CLIENT_URL) {
-    throw new Error('Client URL not passed');
-  }
-
   const app = express();
   const environment = env.ENVIRONMENT;
 
@@ -20,7 +16,7 @@ export function buildApp() {
 
   app.use(
     cors({
-      origin: [env.CLIENT_URL],
+      origin: process.env.CLIENT_URL,
       credentials: true,
     }),
   );

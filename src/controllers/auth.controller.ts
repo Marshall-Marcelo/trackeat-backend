@@ -37,15 +37,15 @@ export async function loginUserController(
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      sameSite: 'lax', //strict in prod
-      // secure: true,
+      sameSite: 'none',
+      secure: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
-      sameSite: 'lax', //strict in prod
-      // secure: true,
+      sameSite: 'none',
+      secure: true,
       maxAge: 15 * 60 * 1000,
     });
 
@@ -86,8 +86,8 @@ export async function refreshAccessTokenController(
 
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
-      sameSite: 'lax', //strict in prod
-      // secure: true,
+      sameSite: 'none',
+      secure: true,
       maxAge: 15 * 60 * 1000,
     });
 
