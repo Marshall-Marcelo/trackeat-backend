@@ -13,10 +13,6 @@ export function buildApp() {
   const environment = env.ENVIRONMENT;
 
   app.use(environment === 'dev' ? morgan('dev') : morgan('tiny'));
-
-  console.log(env.CLIENT_URL, 'ENV FILE');
-  console.log(process.env.CLIENT_URL, 'DIRECT');
-
   app.use(
     cors({
       origin: process.env.CLIENT_URL,

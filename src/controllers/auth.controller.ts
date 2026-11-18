@@ -15,7 +15,6 @@ export async function registerUserController(
 ) {
   try {
     const { email, password } = req.body;
-    console.log(email, 'Controller');
     await registerUser(email, password);
 
     res.status(201).json({ message: 'Account created successfully' });
